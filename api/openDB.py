@@ -33,7 +33,7 @@ class OpenDB():
             return str(e)
 
     def get_breweries_by_city(self, city):
-        url = self.base_url + f'?by_city={city}&per_page=5'
+        url = self.base_url + f'?by_city={city}&per_page=50'
 
         try:
             response = requests.get(url)
