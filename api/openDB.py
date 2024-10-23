@@ -12,7 +12,7 @@ class OpenDB():
             data = {
                 'brew_id': json['id'],
                 'name': json['name'],
-                'type': json['brewery_type'],
+                'brewery_type': json['brewery_type'],
                 'street': json['street'],
                 'city': json['city'],
                 'state': json['state'],
