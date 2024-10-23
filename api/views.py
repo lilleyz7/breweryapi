@@ -25,24 +25,16 @@ class SaveBreweryView(APIView):
         except Brewery.DoesNotExist:
             db = OpenDB()
             brewery_data = db.get_brewery_by_id(brewery_id)
-            if not brewery_data:
+            if len(brewery_data) == 0:
                 return Response({'error': 'brewery not found'}, status=status.HTTP_404_NOT_FOUND)
+            if (isinstance(brewery_data, str)):
+                return Response({'error': 'We done diddly got an error'}, status=status.HTTP_404_NOT_FOUND)
             try:
-                brewery = Brewery.objects.create(
-                    brew_id=brewery_data['id'],
-                    name=brewery_data['name'],
-                    type=brewery_data['brewery_type'],
-                    street=brewery_data['street'],
-                    city=brewery_data['city'],
-                    state=brewery_data['state'],
-                    phone=brewery_data['phone'],
-                    url=brewery_data['website_url'],
-                )
-                serializer = BrewerySerializer(brewery)
+                serializer = BrewerySerializer(data=brewery_data)
                 if serializer.is_valid():
                     serializer.save()
-                    return Response({'brewery':serializer.data}, status=status.HTTP_201_CREATED)
-                return Response({'error': 'brewery not found'}, status=status.HTTP_400_BAD_REQUEST)
+                    return Response({'status': 'success'}, status=status.HTTP_201_CREATED)
+                return Response({'error': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
             except Exception as e:
                 return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
             

@@ -11,4 +11,4 @@ class BrewerySerializer(serializers.ModelSerializer):
     )
     class Meta:
         model = Brewery
-        fields = ['name', 'brew_id','city', 'address', 'state', 'phone', 'type', 'url', 'saved_by_users']
+        fields = ['name', 'brew_id','city', 'street', 'state', 'phone', 'type', 'url', 'saved_by_users']

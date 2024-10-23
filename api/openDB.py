@@ -8,7 +8,18 @@ class OpenDB():
 
         try:
             response = requests.get(url)
-            return response.json()
+            json = response.json()
+            data = {
+                'brew_id': json['id'],
+                'name': json['name'],
+                'type': json['brewery_type'],
+                'street': json['street'],
+                'city': json['city'],
+                'state': json['state'],
+                'phone': json['phone'],
+                'website_url': json['website_url'],
+            }
+            return data
         except Exception as e:
             return str(e)
 
