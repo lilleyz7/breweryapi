@@ -33,6 +33,8 @@ class SaveBreweryView(APIView):
                 serializer = BrewerySerializer(data=brewery_data)
                 if serializer.is_valid():
                     serializer.save()
+                    brewery = Brewery.objects.get(brew_id=brewery_data['brew_id'])
+                    brewery.saved_by_users.add(user)
                     return Response({'status': 'success'}, status=status.HTTP_201_CREATED)
                 return Response({'error': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
             except Exception as e:
